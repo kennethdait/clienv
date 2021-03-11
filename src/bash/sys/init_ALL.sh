@@ -25,7 +25,6 @@ while IFS=$' \n' read -r V{1,2,3}; do
 				echo -e "\\t  [[31;1mERR[00m]: PYTHON OUT OF DATE -- ${V1}.${V2}.${V3}" >&2;
 		fi;
 done < <(python --version 2>&1 | cut -d' ' -f2 | tr '.' ' ');
-return
 
 function list () {
 
@@ -111,6 +110,41 @@ function clienv () {
 		go_to_clienv
 		return $?
 	fi
+	return
+}
+
+function repos () {
+	local TARGET DEF_TARGET; DEF_TARGET=~/Developer
+	TARGET="${DEF_TARGET}"
+	local -i OPTIND
+	while getopts :t: OPT; do
+		case "$OPT" in
+			t)
+				TARGET="${OPTARG}"
+				;;
+			:)
+				/usr/bin/printf '[ERR]: flag requires an argument -- `-%s`\n' "${OPTARG}" >&2
+				;;
+			*)
+				/usr/bin/printf '[ERR]: invalid flag -- %s\n' "${OPTARG}" >&2
+				;;
+		esac
+	done; shift $((OPTIND-1))
+
+	printf '\n  [SEARCHING REPOS IN]: %s\n\n' "${TARGET}" \
+		&& while IFS=$'\n' read -r DIRPATH; do
+			   BN="$(basename "$DIRPATH")"
+				 echo -e "${BN}|${DIRPATH}"
+		   done < <(/usr/bin/find "${TARGET}" -type d -name ".git" -exec dirname "{}" \; 2> /dev/null) \
+			| /usr/bin/sed -E -e "s|${HOME}|~|" \
+			| /usr/bin/awk -F"|" '
+				NF==2{
+					printf ("[35;1m%*.*s[00m => %s\n", -30, 30, $1, $2)
+				}
+			' \
+			| /usr/bin/cut -c1-${COLUMNS:-$(tput cols)} \
+		&& builtin echo
+
 	return
 }
 
