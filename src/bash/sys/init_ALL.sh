@@ -36,12 +36,10 @@ if which python &> /dev/null; then
 	done < <(python --version 2>&1 | cut -d' ' -f2 | tr '.' ' ');
 fi
 
-#[[ -z "${OUTPUT:-}" ]] && OUTPUT="\\t  [UNK ERR]\\n"
 echo -e "${OUTPUT}"
 unset OUTPUT
 
 function list () {
-
 	function list_dir_contents_x1 () {
 		printf '\n\t[40;33;1m CONTENTS OF: [00m[43;30;1m %s [00m\n\n' "${TARGET}" \
 			&& find "${TARGET}" -mindepth 1 -maxdepth 1 \
@@ -80,7 +78,6 @@ function list () {
 }
 
 function clienv () {
-
 	function go_to_clienv () {
 		[[ -z "${clienv:-}" ]] && return 12
 		cd "${clienv}" || return 13
