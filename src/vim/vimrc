@@ -1,0 +1,12 @@
+" VIM USER CONFIG
+"
+syntax on
+colorscheme murphy
+
+set autoindent number ruler
+
+set ts=2 sw=2 sts=2 noet
+
+set fdm=indent fdl=2
+set modeline modelines=2
+
