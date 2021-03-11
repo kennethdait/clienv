@@ -1,6 +1,18 @@
 # clienv
 my command line configuration files
 
+```
+/Users/kend/Developer/clienv/src/bash
+├── bash_logout
+├── bash_profile
+├── bashrc
+└── sys
+    ├── init_ALL.sh
+    ├── init_Darwin.sh
+    ├── init_Linux.sh
+    └── init_NT-10.sh
+```
+
 # notes
 
 * uname output
