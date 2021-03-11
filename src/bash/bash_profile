@@ -21,9 +21,12 @@ elif [[ "$(uname)" =~ ^.*NT-10.*$ ]]; then
 	[[ -r "${BASH_INIT_FILES['nt']}" ]] && source "${BASH_INIT_FILES['nt']}"
 fi
 
-declare -a CLIENV_DEPS
-CLIENV_DEPS=(
+declare -a CLIENV_CMD_DEPS CLIENV_REPO_DEPS
+CLIENV_CMD_DEPS=(
 	bash git node npm python pip
+)
+CLIENV_REPO_DEPS=(
+	scripts:${HOME}/Developer/scripts
 )
 
 [[ -r "${BASH_INIT_FILES['all']}" ]] && source "${BASH_INIT_FILES['all']}"

@@ -1,30 +1,44 @@
 #!/usr/bin/env bash
 # sys/init_ALL.sh
 
-if
-	! which "${CLIENV_DEPS[@]}" &> /dev/null
-then
+declare OUTPUT
+OUTPUT=''
+
+# VERIFY COMMAND DEPENDENCIES
+if ! which "${CLIENV_CMD_DEPS[@]}" &> /dev/null; then
 	printf '\n\t[clienv|[31;1mWARN[00m]: %s\n' \
 		"some dependencies were not met"
-	declare OUTPUT
-	OUTPUT=''
-	for NAME in "${CLIENV_DEPS[@]}"; do
+	for NAME in "${CLIENV_CMD_DEPS[@]}"; do
 		if ! which "${NAME}" &> /dev/null; then
 			OUTPUT+="\\t   [[31;1mmissing[00m]: ${NAME}\\n"
 		fi
 	done
-	[[ -z "${OUTPUT:-}" ]] \
-		&& OUTPUT="\\t  [UNK ERR]\\n"
-	echo -e "${OUTPUT}"
-	unset OUTPUT
+fi
+
+# VERIFY REPO DEPENDENCIES
+if (( ${#CLIENV_REPO_DEPS[@]} > 0 )); then
+	for REPO in "${CLIENV_REPO_DEPS[@]}"; do
+		REPONAME="${REPO%%:*}"
+		REPOPATH="${REPO#*:}"
+		if [[ ! -d "${REPOPATH}/.git" ]]; then
+			OUTPUT+="\\t  [[31;1mmissing repo[00m]: ${REPONAME}\\n"
+		fi
+	done
 fi
 
 # VERIFY PYTHON VERSION 3+
-while IFS=$' \n' read -r V{1,2,3}; do
-		if (( V1 < 3 )); then
-				echo -e "\\t  [[31;1mERR[00m]: PYTHON OUT OF DATE -- ${V1}.${V2}.${V3}" >&2;
-		fi;
-done < <(python --version 2>&1 | cut -d' ' -f2 | tr '.' ' ');
+if which python &> /dev/null; then
+	while IFS=$' \n' read -r V{1,2,3}; do
+			if (( V1 < 3 )); then
+					#echo -e "\\t  [[31;1mERR[00m]: PYTHON OUT OF DATE -- ${V1}.${V2}.${V3}" >&2;
+					OUTPUT+="\\t  [[31;1mOLD PYTHON VERSION[00m]: ${V1}.${V2}.${V3}\\n"
+			fi;
+	done < <(python --version 2>&1 | cut -d' ' -f2 | tr '.' ' ');
+fi
+
+#[[ -z "${OUTPUT:-}" ]] && OUTPUT="\\t  [UNK ERR]\\n"
+echo -e "${OUTPUT}"
+unset OUTPUT
 
 function list () {
 
