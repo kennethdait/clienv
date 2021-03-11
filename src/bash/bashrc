@@ -1,2 +1,6 @@
-#/usr/bin/env bash
+#!/usr/bin/env bash
 # ~/.bashrc
+
+if [[ "$(uname)" == 'Darwin' ]]; then
+	[[ -r "${BASH_INIT_FILES['darwin']}" ]] && source "${BASH_INIT_FILES['darwin']}"
+fi
