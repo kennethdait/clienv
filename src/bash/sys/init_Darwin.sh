@@ -7,3 +7,7 @@ if ! echo "${PATH}" | grep -Eq -e '/usr/local/opt/python/libexec/bin'; then
 	export PATH=/usr/local/opt/python/libexec/bin"${PATH:+":${PATH}"}"
 fi
 
+if ! echo "${PATH}" | grep -Eq -e '/usr/local/sbin'; then
+	export PATH="${PATH:+"${PATH}:"}"/usr/local/sbin
+fi
+
