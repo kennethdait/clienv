@@ -11,11 +11,16 @@ fi
 winproc () 
 { 
 	function get_task_list() {
-		tasklist | tr '\t' ' ' | tr -s ' ' | sed -E -e 's/[[^::blank:]]*(.*)[[:blank:]]*$/\1/g' | sed 's/ K$/K/' | sed -E -e 's/,([0-9]+)/\1/'
+		tasklist | tr '\t' ' ' | tr -s ' ' | sed -E -e 's/[[^::blank:]]*(.*)[[:blank:]]*$/\1/g' | sed 's/ K$/K/' | sed -E -e 's/,([0-9]+)/\1/' \
+			| sed '1d' \
+			| sed '2s/^.*$//' \
+			| sed '2d' \
+			| grep -E -v '!'
 		return
 	}
 	while IFS=$' \n' read -r NAME ID GROUP XX SIZE; do
 			printf '\t%50s: !%-10s %s\n' "${NAME}" "${ID}" "${SIZE}";
-	done < <(get_task_list);
+	done < <(get_task_list) \
+		| ${PAGER:-less}
 	return
 }
