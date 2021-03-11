@@ -1,15 +1,18 @@
 #!/usr/bin/env bash
 # ~/.bash_profile
 
-declare -x clienv=~/Developer/clienv
-declare -x clienvbash=~/Developer/clienv/src/bash
-
 declare -xA BASH_INIT_FILES=(
 	[darwin]=~/Developer/clienv/src/bash/sys/init_Darwin.sh
 	[linux]=~/Developer/clienv/src/bash/sys/init_Linux.sh
 	[nt]=~/Developer/clienv/src/bash/sys/init_NT-10.sh
 	[all]=~/Developer/clienv/src/bash/sys/init_ALL.sh
 )
+
+declare -xa LOCATION_VARS=()
+declare -x clienv=~/Developer/clienv
+	[[ -n "${clienv:-}" ]] && LOCATION_VARS+=(clienv)
+declare -x clienvbash=~/Developer/clienv/src/bash
+	[[ -n "${clienvbash:-}" ]] && LOCATION_VARS+=(clienvbash)
 
 shopt -s cdable_vars
 
@@ -30,3 +33,17 @@ CLIENV_REPO_DEPS=(
 )
 
 [[ -r "${BASH_INIT_FILES['all']}" ]] && source "${BASH_INIT_FILES['all']}"
+
+# SET REPO DEPS LOCATION VARIABLES
+for REPO_DEP in "${CLIENV_REPO_DEPS[@]}"; do
+	declare repo{name,path} CMD
+	reponame="${REPO_DEP%%:*}"
+	repopath="${REPO_DEP#*:}"
+	if [[ -d "${repopath}" && -x "${repopath}" ]]; then
+		LOCATION_VARS+=("${reponame}")
+		CMD="export ${reponame}=\"${repopath}\""
+		eval "CMD=> ${CMD}"
+	fi
+	unset repo{name,path} CMD
+done
+
