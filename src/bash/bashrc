@@ -2,5 +2,6 @@
 # ~/.bashrc
 
 if [[ "$(uname)" == 'Darwin' ]]; then
+	#shellcheck disable=1090
 	[[ -r "${BASH_INIT_FILES['darwin']}" ]] && source "${BASH_INIT_FILES['darwin']}"
 fi

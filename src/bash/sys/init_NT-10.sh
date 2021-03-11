@@ -18,6 +18,7 @@ winproc ()
 			| grep -E -v '!'
 		return
 	}
+	#shellcheck disable=2034
 	while IFS=$' \n' read -r NAME ID GROUP XX SIZE; do
 			printf '\t%50s: !%-10s %s\n' "${NAME}" "${ID}" "${SIZE}";
 	done < <(get_task_list) \

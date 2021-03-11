@@ -96,7 +96,7 @@ function clienv () {
 	}
 
 	function list_bash_files () {
-		/usr/bin/find "$clienvbash" -type f \! \( -name "*.sw[a-z]" -or -empty \) -exec printf '%s|' "{}" \; -exec basename "{}" \; \
+		/usr/bin/find "${clienvbash:-}" -type f \! \( -name "*.sw[a-z]" -or -empty \) -exec printf '%s|' "{}" \; -exec basename "{}" \; \
 			| /usr/bin/awk -F"|" '
 				NF==2{
 					printf ("\t%*.*s => %s\n", -20, 20, $2, $1)
@@ -137,6 +137,7 @@ function repos () {
 				TARGET="${OPTARG}"
 				;;
 			:)
+				#shellcheck disable=2016
 				/usr/bin/printf '[ERR]: flag requires an argument -- `-%s`\n' "${OPTARG}" >&2
 				;;
 			*)
