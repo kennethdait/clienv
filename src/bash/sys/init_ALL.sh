@@ -58,3 +58,51 @@ function list () {
 	return
 }
 
+function clienv () {
+
+	function go_to_clienv () {
+		[[ -z "${clienv:-}" ]] && return 12
+		cd "${clienv}" || return 13
+		printf '  [git pull]... '
+		if /usr/bin/git pull &> /dev/null; then
+			echo "SUCCESS"\!
+			return 0
+		else
+			echo "FAILED TO PULL"\! >&2
+			return 14
+		fi
+		return 15
+	}
+
+	function list_bash_files () {
+		/usr/bin/find "$clienvbash" -type f \! \( -name "*.sw[a-z]" -or -empty \) -exec printf '%s|' "{}" \; -exec basename "{}" \; \
+			| /usr/bin/awk -F"|" '
+				NF==2{
+					printf ("\t%*.*s => %s\n", -20, 20, $2, $1)
+				}
+			'
+		return
+	}
+
+	if (($#>0)); then
+		case "${1}" in
+			go)
+				go_to_clienv
+				return $?
+				;;
+			b|bash)
+				list_bash_files
+				return
+				;;
+			*)
+				printf '[ERR]: unrecognized subcommand -- %s\n' "${1}" >&2
+				return 11
+				;;
+		esac
+	elif (($#==0)); then
+		go_to_clienv
+		return $?
+	fi
+	return
+}
+
