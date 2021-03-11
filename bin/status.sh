@@ -23,7 +23,11 @@ function systemReport_linux () {
 }
 
 function systemReport_windows () {
+  local TERMPROG
+  TERMPROG="${TERM_PROGRAM:-"<NULL>"}"
+  
   echo "${sysname:-}"
+  echo "TERM PROGRAM: ${TERMPROG}"
   return
 }
 
@@ -39,9 +43,13 @@ case "${sysname}" in
     sysname='Linux'
     systemReport_linux
     ;;
-  *)
+  *_nt-10*)
     sysname='Windows'
     systemReport_windows
+    ;;
+  *)
+    printf '\t[ERROR]: %s -- %s\n' "system not recognized" "${sysname}" >&2
+    exit 11
     ;;
 esac
 

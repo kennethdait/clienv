@@ -1,6 +1,14 @@
 # clienv
 my command line configuration files
 
+# notes
+
+* uname output
+  * windows using gitbash: `MINGW64_NT-10.0-19041`
+  * windows using msys: `MINGW64_NT-10.0-19041`
+  * windows using cygwin64: `CYGWIN_NT-10.0`
+  * mac: `Darwin`
+
 # binaries (root/bin)
 
 * status.sh
