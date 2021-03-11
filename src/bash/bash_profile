@@ -34,14 +34,11 @@ CLIENV_REPO_DEPS=(
 	scripts:"${HOME}/Developer/scripts"
 )
 
-#shellcheck disable=1090
-[[ -r "${BASH_INIT_FILES['all']}" ]] && source "${BASH_INIT_FILES['all']}"
-
 # SET REPO DEPS LOCATION VARIABLES
 for REPO_DEP in "${CLIENV_REPO_DEPS[@]}"; do
 	declare repo{name,path} CMD
 	reponame="${REPO_DEP%%:*}"
-	repopath="${REPO_DEP#*:}"
+	repopath="${REPO_DEP#*:}/src"
 	if [[ -d "${repopath}" && -x "${repopath}" ]]; then
 		LOCATION_VARS+=("${reponame}")
 		CMD="export ${reponame}=\"${repopath}\""
@@ -49,4 +46,7 @@ for REPO_DEP in "${CLIENV_REPO_DEPS[@]}"; do
 	fi
 	unset repo{name,path} CMD
 done
+
+#shellcheck disable=1090
+[[ -r "${BASH_INIT_FILES['all']}" ]] && source "${BASH_INIT_FILES['all']}"
 
