@@ -43,3 +43,22 @@ if command -v system_profiler &> /dev/null; then
 	}
 fi
 
+function homedirs () {
+    function size_report ()
+    {
+			while IFS= read -r DIR; do
+				du -sm "${DIR}";
+			done < <(find ~ -maxdepth 1 -mindepth 1 -name "[A-KM-Z]*") \
+				| sort -nr \
+				| awk -Ft '
+					{
+						printf ("%8d MB  =>  %s\n", $1, $2)
+					}
+				' \
+				| sed -E -e "s:${HOME}/::";
+			return
+    };
+    printf '\n\tHOME DIR FOLDERS:\n\n%s\n\n' "$(size_report)";
+    return
+}
+
