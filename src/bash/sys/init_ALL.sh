@@ -39,6 +39,9 @@ fi
 echo -e "${OUTPUT}"
 unset OUTPUT
 
+# SET SHELL OPTIONS
+shopt -s cdable_vars failglob
+
 function list () {
 	function list_dir_contents_x1 () {
 		printf '\n\t[40;33;1m CONTENTS OF: [00m[43;30;1m %s [00m\n\n' "${TARGET}" \
