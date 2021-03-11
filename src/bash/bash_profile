@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # ~/.bash_profile
 
-declare -xr clienv=~/Developer/clienv
-declare -xr clienvbash=~/Developer/clienv/src/bash
+declare -x clienv=~/Developer/clienv
+declare -x clienvbash=~/Developer/clienv/src/bash
 
 declare -xAr BASH_INIT_FILES=(
 	[darwin]=~/Developer/clienv/src/bash/sys/init_Darwin.sh
