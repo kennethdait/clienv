@@ -19,6 +19,14 @@ then
 	unset OUTPUT
 fi
 
+# VERIFY PYTHON VERSION 3+
+while IFS=$' \n' read -r V{1,2,3}; do
+		if (( V1 < 3 )); then
+				echo -e "\\t  [[31;1mERR[00m]: PYTHON OUT OF DATE -- ${V1}.${V2}.${V3}" >&2;
+		fi;
+done < <(python --version 2>&1 | cut -d' ' -f2 | tr '.' ' ');
+return
+
 function list () {
 
 	function list_dir_contents_x1 () {
