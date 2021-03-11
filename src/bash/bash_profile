@@ -8,6 +8,7 @@ declare -xA BASH_INIT_FILES=(
 	[darwin]=~/Developer/clienv/src/bash/sys/init_Darwin.sh
 	[linux]=~/Developer/clienv/src/bash/sys/init_Linux.sh
 	[nt]=~/Developer/clienv/src/bash/sys/init_NT-10.sh
+	[all]=~/Developer/clienv/src/bash/sys/init_ALL.sh
 )
 
 shopt -s cdable_vars
@@ -19,3 +20,10 @@ elif [[ "$(uname)" == 'Linux' ]]; then
 elif [[ "$(uname)" =~ ^.*NT-10.*$ ]]; then
 	[[ -r "${BASH_INIT_FILES['nt']}" ]] && source "${BASH_INIT_FILES['nt']}"
 fi
+
+declare -a CLIENV_DEPS
+CLIENV_DEPS=(
+	bash git node npm python pip
+)
+
+[[ -r "${BASH_INIT_FILES['all']}" ]] && source "${BASH_INIT_FILES['all']}"
