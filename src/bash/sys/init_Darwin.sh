@@ -60,3 +60,14 @@ function homedirs () {
     return
 }
 
+function update () { 
+    local list;
+    list="$(softwareupdate --list --all 2>&1 > /dev/null)";
+    if [[ "${list}" == 'No new software available.' ]]; then
+        echo "[SOFTWAREUPDATE]: <NONE>";
+    else
+        echo "${list}";
+    fi;
+    return
+}
+
