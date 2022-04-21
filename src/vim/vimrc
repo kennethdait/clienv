@@ -1,0 +1,17 @@
+" USER VIM CONFIG
+" ~/.vim/vimrc
+
+syntax enable
+
+set autoindent
+set number
+set tabstop=2
+set softtabstop=2
+set shiftwidth=2
+set noexpandtab
+set modeline modelines=2
+
+set nowrap
+
+set foldmethod=indent
+set foldlevel=2
