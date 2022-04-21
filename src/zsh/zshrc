@@ -89,5 +89,12 @@ _report_sourced "~/.zshrc"
 	alias grep='command grep --color=auto'
 	alias egrep='egrep --color=auto'
 	alias fgrep='fgrep --color=auto'
+
+	if _is_mac;
+	then
+		# mac-specific aliases
+		alias airport='/System/Library/PrivateFrameworks/Apple80211.framework/Versions/A/Resources/airport'
+		alias code='/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code'
+	fi
 }
 
