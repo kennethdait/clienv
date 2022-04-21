@@ -15,7 +15,6 @@ echo "[bash]: sourced file -- bashrc"
 { # SET ALIASES
 	alias sbash='[ -r ~/.bash_profile ] && . ~/.bash_profile'
 
-	if [[ "$(uname -s)" == 'Darwin' ]];
 	if _is_mac;
 	then alias ls='ls -G'
 	else alias ls='ls --color=auto'
