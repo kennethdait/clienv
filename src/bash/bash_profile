@@ -1,4 +1,19 @@
 #!/usr/bin/env bash
 # ~/.bash_profile
 
+{	# HELPER FUNCTIONS
+	_is_mac () {
+		[[ "$(uname -s)" == 'Darwin' ]]
+		return $?
+	}
+}
+
 echo "[bash]: sourced file -- bash_profile"
+
+if _is_mac;
+then
+	# set homebrew variables
+	eval "$(/opt/homebrew/bin/brew shellenv)"
+	[ -r ~/.bashrc ] && source ~/.bashrc
+fi
+
