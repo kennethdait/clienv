@@ -3,3 +3,26 @@
 
 _report_sourced "~/.zshrc"
 
+{	# HELPER FUNCTIONS AND VARIABLES
+	_prepend_to_path () {
+		local TARGET_PATH
+		TARGET_PATH="${1:?}"
+		! echo "${PATH}" | /usr/bin/grep -qe "${TARGET_PATH}" \
+			&& export PATH="${TARGET_PATH}${PATH:+":$PATH"}"
+		return
+	}
+
+	declare -a PREPEND_PATHS
+	PREPEND_PATHS=(
+		~/.bin
+	);
+}
+
+{	# SET ENVIRONMENT VARIABLES
+	for dir in "${PREPEND_PATHS[@]}";
+	do _prepend_to_path "${dir}"
+	done
+	#_prepend_to_path ~/.bin
+}
+
+unset PREPEND_PATHS
