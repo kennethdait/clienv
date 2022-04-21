@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# ~/.bashrc
+
+echo "[bash]: sourced file -- bashrc"
