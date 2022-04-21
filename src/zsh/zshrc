@@ -55,6 +55,7 @@ _report_sourced "~/.zshrc"
 				if mkdir "${dir}" &> /dev/null;
 				then echo SUCCESS!
 				else echo FAILED!; continue;
+				fi
 			fi
 			_prepend_to_path "${dir}"
 		done
