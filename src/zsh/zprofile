@@ -1,0 +1,8 @@
+#!/usr/bin/env zsh
+# USER ZSH CONFIGURATION: ~/.zprofile
+
+{	# HELPER FUNCTIONS
+	_report_sourced () { local SOURCED_FILE; printf '  [zsh]: sourced file -- %s\n' "${SOURCED_FILE:?}"; return; }
+}
+
+_report_sourced "~/.zprofile"
