@@ -4,7 +4,6 @@
 _report_sourced "~/.zshrc"
 
 {	# HELPER FUNCTIONS AND VARIABLES
-
 	_prepend_to_path () {
 		local TARGET_PATH
 		TARGET_PATH="${1:?}"
@@ -31,7 +30,6 @@ _report_sourced "~/.zshrc"
 
 
 {	# SET PATH
-
 	if _is_mac;
 	then # set mac PATH variables
 
@@ -66,6 +64,7 @@ _report_sourced "~/.zshrc"
 
 {	# SET ENVIRONMENT VARIABLES
 	export LSCOLORS='Gxcxcxdxbxegedabagacad'
+	export PROMPT='%1~ %# '
 }
 
 {	# SET ALIASES
