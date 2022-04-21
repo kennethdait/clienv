@@ -50,3 +50,7 @@ _report_sourced "~/.zshrc"
 	unset PYTHON_EXEC_PATH PREPEND_PATHS
 }
 
+{	# SET ENVIRONMENT VARIABLES
+	export LSCOLORS='Gxcxcxdxbxegedabagacad'
+}
+
