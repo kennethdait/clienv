@@ -18,6 +18,11 @@ _report_sourced "~/.zshrc"
 		return $?
 	}
 
+	_is_linux () {
+		[[ "$(uname -s)" == 'Linux' ]]
+		return $?
+	}
+
 	declare -a PREPEND_PATHS
 	PREPEND_PATHS=(
 		~/.bin
@@ -60,5 +65,28 @@ _report_sourced "~/.zshrc"
 
 {	# SET ENVIRONMENT VARIABLES
 	export LSCOLORS='Gxcxcxdxbxegedabagacad'
+}
+
+{	# SET ALIASES
+
+	if _is_mac; then alias ls='command ls -G'; fi
+	elif _is_linux; then alias ls='command ls --color=auto'
+	else alias ls='command ls --color=auto'
+	fi
+
+	alias l.='ls -d .[^(.$)$]*'
+	alias la='ls -A'
+	alias ld='ls -d .[^(.$)$]*'
+	alias ll='ls -l'
+	alias ll.='ls -ld .[^(.$)$]*'
+	alias lla='ls -lA'
+	alias l1='ls -1'
+	alias lm='ls -m'
+	alias l1.='ls -1d .[^(.$)$]*'
+	alias lm.='ls -md .[^(.$)$]*'
+
+	alias grep='command grep --color=auto'
+	alias egrep='egrep --color=auto'
+	alias fgrep='fgrep --color=auto'
 }
 
